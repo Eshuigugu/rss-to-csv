@@ -1,19 +1,23 @@
 from bs4 import BeautifulSoup
-from urllib.request import urlopen
 import csv
 import os.path
 import re
 import io
 import argparse
+from urllib.request import urlopen, Request
+
+# urlopen(Request(url, headers={'User-Agent': 'Mozilla'}))
 
 
 def parse_xml(rss_link):
-    parse_xml_url = urlopen(rss_link)
+    parse_xml_url = urlopen(Request(rss_link, headers={'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.47 Safari/537.36'}))
     xml_page = urlopen(link).read()
     parse_xml_url.close()
     doc = BeautifulSoup(xml_page, 'xml')
-    rss_items = doc.findAll("item")
-    return rss_items
+    rss_item = doc.findAll("entry")
+    rss_item.extend(doc.findAll("item"))
+    print(len(rss_item))
+    return rss_item
 
 
 def parse_and_write(rss_item):
@@ -146,6 +150,7 @@ def tail(file_name, csv_lines):
                 f.seek(0, 0)
                 # only read what was not read
                 data.insert(0, f.read(bytes).decode('utf-8', 'ignore'))
+                data = ''.join(data)
 
             # my trash
             output = io.StringIO(initial_value=''.join(data))
@@ -192,6 +197,8 @@ for link in args.urls:
 # gets the total number of rss items that were retrieved from the links
 num_rss_items = sum([len(rss_items[link][:]) for link in rss_items][:])
 
+# print(rss_items)
 # parses and writes the rss content
 for link in rss_items:
+    # print(rss_items[link].prettify())
     parse_and_write(rss_items[link])
