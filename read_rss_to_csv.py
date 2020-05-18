@@ -199,5 +199,4 @@ num_rss_items = sum([len(rss_items[link][:]) for link in rss_items][:])
 # print(rss_items)
 # parses and writes the rss content
 for link in rss_items:
-    # print(rss_items[link].prettify())
     parse_and_write(rss_items[link])
