@@ -16,7 +16,6 @@ def parse_xml(rss_link):
     doc = BeautifulSoup(xml_page, 'xml')
     rss_item = doc.findAll("entry")
     rss_item.extend(doc.findAll("item"))
-    print(len(rss_item))
     return rss_item
 
 
