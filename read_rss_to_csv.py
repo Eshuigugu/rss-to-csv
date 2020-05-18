@@ -6,8 +6,6 @@ import io
 import argparse
 from urllib.request import urlopen, Request
 
-# urlopen(Request(url, headers={'User-Agent': 'Mozilla'}))
-
 
 def parse_xml(rss_link):
     parse_xml_url = urlopen(Request(rss_link, headers={'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.47 Safari/537.36'}))
