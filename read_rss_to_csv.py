@@ -19,7 +19,7 @@ def parse_xml(rss_link):
 
 def parse_and_write(rss_item):
     # parses xml and turns it into a list of dicts using bs4
-    # rss list will contain dictionaries of all the items read from the rss feed
+    # rss_content will contain dictionaries of all the items read from the rss feed
     global rss_content
     rss_content = []
     for item in rss_item:
